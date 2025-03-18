@@ -1,0 +1,51 @@
+import {createApi,fetchBaseQuery} from "@reduxjs/toolkit/query/react"
+export const api=createApi({
+    baseQuery:fetchBaseQuery({baseUrl:process.env.REACT_APP_BASE_URL}),
+    reducerPath:"adminApi",
+    tagTypes:["User","Students","Teachers","Transactions","Geography","Sales","Daily","Breakdown","Admin"],
+    endpoints:(build)=>({ 
+        getUser:build.query({
+            query:(id)=>`general/user/${id}`,
+            providesTags:["User"]
+        }),
+        getStudents:build.query({
+            query:()=>"client/students",
+            providesTags:["Students"]
+        }),
+        getTeachers:build.query({
+            query:()=>"client/teachers",
+            providesTags:["Teachers"] 
+        }),
+        getTransactions:build.query({
+            query:({page,pageSize,sort,search})=>({
+                url:"client/transactions",
+                method:"GET",
+                params:{page,pageSize,sort,search}
+            }),
+            providesTags:["Transactions"]
+        }),
+        getGeography:build.query({
+         query :()=>"client/geography",
+         providesTags:["Geography"]
+        }),
+        getSales:build.query({
+            query:()=>"sales/sales",
+            providesTags:["Sales"]
+        }),
+        getDaily:build.query({
+            query:()=>"sales/daily",
+            providesTags:["Daily"]
+        }),
+        getNewTransaction:build.query({
+            query:()=>"client/transactions",
+            providesTags:["Breakdown"]
+        }),
+        getAdmins:build.query({
+            query:()=>"management/admin",
+            providesTags:["Admin"]
+        })
+    })
+})
+export const {
+    useGetUserQuery,useGetStudentsQuery,useGetTeachersQuery,useGetTransactionsQuery,useGetGeographyQuery,useGetSalesQuery,useGetDailyQuery,useGetNewTransactionQuery,useGetAdminsQuery
+}=api;
