@@ -3,6 +3,7 @@ import StudentStat from "../models/StudentStat.js";
 import User from "../models/User.js";
 import Transaction  from "../models/Transactions.js";
 import countryIso2To3 from "country-iso-2-to-3";
+import Performance from "../models/Performance.js";
 export const getStudents=async(req,res)=>{
     try{
        const students=await Student.find();
@@ -114,5 +115,15 @@ export const getGeography=async(req,res)=>{
     catch (error) {
         console.error("Error fetching transactions:", error);
         res.status(500).json({ message: "Internal Server Error" });
+    }
+}
+export const getPerformance=async(req,res)=>{
+    try{
+        const performance=await Performance.find()
+        res.status(200).json(performance)
+
+    }catch(error)
+    {
+        res.status(500).json({message:error.message})
     }
 }

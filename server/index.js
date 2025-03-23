@@ -9,15 +9,19 @@ import clientRoutes from "./routes/client.js"
 import managementRoutes from "./routes/management.js"
 import generalRoutes from "./routes/general.js"
 import salesRoutes from "./routes/sales.js"
+// import authRoutes from "./routes/auth.js"
 import User from "./models/User.js"
 import Daily from './models/Daily.js'
-import {dataUser,dataStudentStats, dataStudents,dataTransactions,dataOverallStatStudent} from "./data/index.js"
+import {dataUser,dataStudentStats, dataStudents,dataTransactions,dataOverallStatStudent,dataPerfomance,registeredUsers} from "./data/index.js"
 
 import StudentStat from './models/StudentStat.js'
 import Student from './models/Student.js'
 import Transaction from './models/Transactions.js'
 import OverallStat from './models/OverAllStat.js'
 import {dailyStudentData} from "./data/index.js"
+import Performance from './models/Performance.js'
+import LoginSignUp from './models/LoginSignUp.js'
+
 dotenv.config();
 const app=express()
 app.use(express.json())
@@ -32,6 +36,7 @@ app.use("/client",clientRoutes)
 app.use("/general",generalRoutes)
 app.use("/management",managementRoutes)
 app.use("/sales",salesRoutes)
+// app.use("/auth",authRoutes)
 
 // mongoose setup
 const PORT=process.env.PORT || 9000
@@ -49,4 +54,9 @@ mongoose.connect(process.env.MONGO_URL,{
     // Transaction.insertMany(dataTransactions)
     // OverallStat.insertMany(dataOverallStatStudent)
     // Daily.insertMany(dailyStudentData);
+    // Performance.insertMany(dataPerfomance)
+    // LoginSignUp.insertMany(registeredUsers)
+
+
+
 }).catch((error)=>console.log(`${error} did not connect`))

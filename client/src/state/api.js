@@ -2,7 +2,7 @@ import {createApi,fetchBaseQuery} from "@reduxjs/toolkit/query/react"
 export const api=createApi({
     baseQuery:fetchBaseQuery({baseUrl:process.env.REACT_APP_BASE_URL}),
     reducerPath:"adminApi",
-    tagTypes:["User","Students","Teachers","Transactions","Geography","Sales","Daily","Breakdown","Admin"],
+    tagTypes:["User","Students","Teachers","Transactions","Geography","Sales","Daily","Breakdown","Admin","Performance","Dashboard","Auth"],
     endpoints:(build)=>({ 
         getUser:build.query({
             query:(id)=>`general/user/${id}`,
@@ -43,9 +43,33 @@ export const api=createApi({
         getAdmins:build.query({
             query:()=>"management/admin",
             providesTags:["Admin"]
+        }),
+        getPerformance:build.query({
+            query:()=>"client/performance",
+            providesTags:["Performance"]
+        }),
+        getDashboardStats:build.query({
+            query:()=>"general/dashboard",
+            providesTags:["Dashboard"]
+        }),
+        getLogin:build.mutation({
+            query:(credentials)=>({
+                url:"auth/login",
+                method:"POST",
+                body:credentials
+            }),
+            invalidatesTags: ["Auth"]
+        }),
+        getSignup: build.mutation({
+            query: (userData) => ({
+                url: "auth/signup",
+                method: "POST",
+                body: userData
+            }),
+            invalidatesTags: ["Auth"]
         })
     })
 })
 export const {
-    useGetUserQuery,useGetStudentsQuery,useGetTeachersQuery,useGetTransactionsQuery,useGetGeographyQuery,useGetSalesQuery,useGetDailyQuery,useGetNewTransactionQuery,useGetAdminsQuery
+    useGetUserQuery,useGetStudentsQuery,useGetTeachersQuery,useGetTransactionsQuery,useGetGeographyQuery,useGetSalesQuery,useGetDailyQuery,useGetNewTransactionQuery,useGetAdminsQuery,useGetPerformanceQuery,useGetDashboardStatsQuery,useGetLoginMutation,useGetSignupMutation
 }=api;

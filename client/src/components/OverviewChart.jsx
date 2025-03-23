@@ -39,7 +39,7 @@ const OverviewChart = ({ isDashboard = false, view }) => {
   if (!data || isLoading) return <div>Loading...</div>;
 
   return (
-    <div style={{ height: "75vh"}}>
+    <div style={{ height: "100%",width:"100%"}}>
       <ResponsiveLine
         data={chartData}  // ✅ Pass transformed data here
         margin={{ top: 50, right: 110, bottom: 50, left: 70 }}

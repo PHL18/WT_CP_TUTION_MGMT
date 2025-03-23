@@ -47,10 +47,11 @@ const BreakdownChart = ({ isDashboard = false }) => {
 
   return (
     <Box
-      height="400px"
+      height="500px"
       minHeight="75vh"
       minWidth={isDashboard ? "325px" : undefined}
       position="relative"
+      mt="-50px"
     >
       <ResponsivePie
         data={formattedData} // ✅ Use correct data
@@ -80,24 +81,7 @@ const BreakdownChart = ({ isDashboard = false }) => {
             text: { fill: theme.palette.text.primary },
           },
         }}
-        legends={[
-          {
-            anchor: "bottom",
-            direction: "row",
-            translateY: 70,
-            itemWidth: 95,
-            itemHeight: 18,
-            itemTextColor: "#999",
-            symbolSize: 18,
-            symbolShape: "circle",
-            effects: [
-              {
-                on: "hover",
-                style: { itemTextColor: theme.palette.secondary[300] },
-              },
-            ],
-          },
-        ]}
+        
       />
       {/* Centered Total Amount */}
       <Box

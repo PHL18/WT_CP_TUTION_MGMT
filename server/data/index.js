@@ -2448,6 +2448,215 @@ export const dataAffiliateStat = [
       guardianName: "Rajesh Deshmukh",
     },
   ];
+  export const registeredUsers=[
+    {
+      username:"PHL18",
+      email:"piyush@gmail.com",
+      password:"12345"
+    }
+  ]
+  export const dataPerfomance=[
+      {
+        "id": 1,
+        "name": "Alice Johnson",
+        "attendance_percentage": 92,
+        "subjects": {
+          "Math": { "MSE": 45, "ESE": 88 },
+          "Science": { "MSE": 42, "ESE": 85 },
+          "English": { "MSE": 40, "ESE": 78 }
+        }
+      },
+      {
+        "id": 2,
+        "name": "Bob Smith",
+        "attendance_percentage": 85,
+        "subjects": {
+          "Math": { "MSE": 38, "ESE": 80 },
+          "Science": { "MSE": 40, "ESE": 75 },
+          "English": { "MSE": 35, "ESE": 70 }
+        }
+      },
+      {
+        "id": 3,
+        "name": "Charlie Brown",
+        "attendance_percentage": 78,
+        "subjects": {
+          "Math": { "MSE": 30, "ESE": 65 },
+          "Science": { "MSE": 35, "ESE": 68 },
+          "English": { "MSE": 33, "ESE": 60 }
+        }
+      },
+      {
+        "id": 4,
+        "name": "David Lee",
+        "attendance_percentage": 95,
+        "subjects": {
+          "Math": { "MSE": 50, "ESE": 90 },
+          "Science": { "MSE": 48, "ESE": 88 },
+          "English": { "MSE": 45, "ESE": 85 }
+        }
+      },
+      {
+        "id": 5,
+        "name": "Emily Clark",
+        "attendance_percentage": 88,
+        "subjects": {
+          "Math": { "MSE": 42, "ESE": 83 },
+          "Science": { "MSE": 40, "ESE": 80 },
+          "English": { "MSE": 38, "ESE": 75 }
+        }
+      },
+      {
+        "id": 6,
+        "name": "Franklin White",
+        "attendance_percentage": 90,
+        "subjects": {
+          "Math": { "MSE": 46, "ESE": 85 },
+          "Science": { "MSE": 44, "ESE": 82 },
+          "English": { "MSE": 41, "ESE": 79 }
+        }
+      },
+      {
+        "id": 7,
+        "name": "Grace Adams",
+        "attendance_percentage": 83,
+        "subjects": {
+          "Math": { "MSE": 35, "ESE": 75 },
+          "Science": { "MSE": 36, "ESE": 70 },
+          "English": { "MSE": 33, "ESE": 65 }
+        }
+      },
+      {
+        "id": 8,
+        "name": "Henry Watson",
+        "attendance_percentage": 89,
+        "subjects": {
+          "Math": { "MSE": 41, "ESE": 82 },
+          "Science": { "MSE": 39, "ESE": 78 },
+          "English": { "MSE": 37, "ESE": 74 }
+        }
+      },
+      {
+        "id": 9,
+        "name": "Isabella Carter",
+        "attendance_percentage": 94,
+        "subjects": {
+          "Math": { "MSE": 48, "ESE": 89 },
+          "Science": { "MSE": 46, "ESE": 86 },
+          "English": { "MSE": 44, "ESE": 82 }
+        }
+      },
+      {
+        "id": 10,
+        "name": "Jack Turner",
+        "attendance_percentage": 76,
+        "subjects": {
+          "Math": { "MSE": 29, "ESE": 62 },
+          "Science": { "MSE": 31, "ESE": 65 },
+          "English": { "MSE": 30, "ESE": 58 }
+        }
+      },
+      {
+        "id": 11,
+        "name": "Kevin Martinez",
+        "attendance_percentage": 91,
+        "subjects": {
+          "Math": { "MSE": 47, "ESE": 87 },
+          "Science": { "MSE": 44, "ESE": 84 },
+          "English": { "MSE": 42, "ESE": 80 }
+        }
+      },
+      {
+        "id": 12,
+        "name": "Laura Scott",
+        "attendance_percentage": 87,
+        "subjects": {
+          "Math": { "MSE": 40, "ESE": 81 },
+          "Science": { "MSE": 39, "ESE": 77 },
+          "English": { "MSE": 36, "ESE": 73 }
+        }
+      },
+      {
+        "id": 13,
+        "name": "Michael Green",
+        "attendance_percentage": 82,
+        "subjects": {
+          "Math": { "MSE": 33, "ESE": 72 },
+          "Science": { "MSE": 34, "ESE": 70 },
+          "English": { "MSE": 31, "ESE": 68 }
+        }
+      },
+      {
+        "id": 14,
+        "name": "Natalie Rodriguez",
+        "attendance_percentage": 96,
+        "subjects": {
+          "Math": { "MSE": 49, "ESE": 92 },
+          "Science": { "MSE": 47, "ESE": 89 },
+          "English": { "MSE": 46, "ESE": 88 }
+        }
+      },
+      {
+        "id": 15,
+        "name": "Oliver Bennett",
+        "attendance_percentage": 84,
+        "subjects": {
+          "Math": { "MSE": 37, "ESE": 78 },
+          "Science": { "MSE": 36, "ESE": 75 },
+          "English": { "MSE": 34, "ESE": 72 }
+        }
+      },
+      {
+        "id": 16,
+        "name": "Penelope Wright",
+        "attendance_percentage": 88,
+        "subjects": {
+          "Math": { "MSE": 43, "ESE": 83 },
+          "Science": { "MSE": 41, "ESE": 79 },
+          "English": { "MSE": 39, "ESE": 76 }
+        }
+      },
+      {
+        "id": 17,
+        "name": "Quentin Hall",
+        "attendance_percentage": 80,
+        "subjects": {
+          "Math": { "MSE": 32, "ESE": 68 },
+          "Science": { "MSE": 30, "ESE": 65 },
+          "English": { "MSE": 28, "ESE": 62 }
+        }
+      },
+      {
+        "id": 18,
+        "name": "Rachel Evans",
+        "attendance_percentage": 93,
+        "subjects": {
+          "Math": { "MSE": 46, "ESE": 90 },
+          "Science": { "MSE": 45, "ESE": 88 },
+          "English": { "MSE": 42, "ESE": 85 }
+        }
+      },
+      {
+        "id": 19,
+        "name": "Samuel Parker",
+        "attendance_percentage": 79,
+        "subjects": {
+          "Math": { "MSE": 31, "ESE": 66 },
+          "Science": { "MSE": 30, "ESE": 63 },
+          "English": { "MSE": 29, "ESE": 61 }
+        }
+      },
+      {
+        "id": 20,
+        "name": "Taylor Morris",
+        "attendance_percentage": 86,
+        "subjects": {
+          "Math": { "MSE": 39, "ESE": 77 },
+          "Science": { "MSE": 38, "ESE": 74 },
+          "English": { "MSE": 36, "ESE": 71 }
+        }
+      }
+  ]
   export const dataTransactions = [
     {
       transactionId: "txn001",
