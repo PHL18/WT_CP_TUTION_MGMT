@@ -7,20 +7,36 @@ import { themeSettings } from "theme";
 import Dashboard from "scenes/dashboard";
 import Layout from "scenes/layout";
 import Students from "scenes/students";  
-import Teachers from "scenes/teachers"
-import Transaction from "scenes/transaction"
-import Geography from "scenes/geography"
-import Overview from "scenes/overview"
-import Daily from "scenes/daily"
-import Monthly from "scenes/monthly"
-import Breakdown from "scenes/breakdown"
-import Admin from "scenes/admins"
-import Performance from "scenes/performance"
-// import Login from "scenes/login"
+import Teachers from "scenes/teachers";
+import Transaction from "scenes/transaction";
+import Geography from "scenes/geography";
+import Overview from "scenes/overview";
+import Daily from "scenes/daily";
+import Monthly from "scenes/monthly";
+import Breakdown from "scenes/breakdown";
+import Admin from "scenes/admins";
+import Performance from "scenes/performance";
+import Login from "scenes/login";
+import SignUp from "scenes/signup";
+import { useState, useEffect } from "react";
+
+function PrivateRoute({ element }) {
+  const isAuthenticated = localStorage.getItem("token"); // Example authentication check
+
+  return isAuthenticated ? element : <Navigate to="/login" replace />;
+}
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+
+  // Track authentication state
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // Simulating authentication check from localStorage
+    setIsAuthenticated(!!localStorage.getItem("token"));
+  }, []);
 
   return (
     <div className="app">
@@ -28,23 +44,26 @@ function App() {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Routes>
-            {/* Layout will always wrap the content with Sidebar and Navbar */}
-            <Route element={<Layout />}>
-              <Route path="/" element={<Navigate to="/dashboard" replace />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/students" element={<Students />} />
-              <Route path="/teachers" element={<Teachers />} />
-              <Route path="/transactions" element={<Transaction />} />
-              <Route path="/geography" element={<Geography />} />
-              <Route path="/overview" element={<Overview />} />
-              <Route path="/daily" element={< Daily/>} />
-              <Route path="/monthly" element={< Monthly/>} />
-              <Route path="/breakdown" element={< Breakdown/>} />
-              <Route path="/admin" element={<Admin/>} />
-              <Route path="/performance" element={<Performance/>} />
-              {/* <Route path="/login" element={<Login/>} /> */}
-             
+            {/* Show Login First */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
 
+            {/* Redirect to login if not authenticated */}
+            <Route path="/" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />} />
+
+            {/* Protected Routes */}
+            <Route element={<Layout />}>
+              <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
+              <Route path="/students" element={<PrivateRoute element={<Students />} />} />
+              <Route path="/teachers" element={<PrivateRoute element={<Teachers />} />} />
+              <Route path="/transactions" element={<PrivateRoute element={<Transaction />} />} />
+              <Route path="/geography" element={<PrivateRoute element={<Geography />} />} />
+              <Route path="/overview" element={<PrivateRoute element={<Overview />} />} />
+              <Route path="/daily" element={<PrivateRoute element={<Daily />} />} />
+              <Route path="/monthly" element={<PrivateRoute element={<Monthly />} />} />
+              <Route path="/breakdown" element={<PrivateRoute element={<Breakdown />} />} />
+              <Route path="/admin" element={<PrivateRoute element={<Admin />} />} />
+              <Route path="/performance" element={<PrivateRoute element={<Performance />} />} />
             </Route>
           </Routes>
         </ThemeProvider>

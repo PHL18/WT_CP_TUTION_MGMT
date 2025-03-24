@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   LightModeOutlined,
   DarkModeOutlined,
@@ -8,8 +8,10 @@ import {
   ArrowDropDownOutlined,
 } from "@mui/icons-material";
 import FlexBetween from "./FlexBetween";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setMode } from "state";
+import { useNavigate } from "react-router-dom";
+import { setUser } from "state/GlobalSlice";
 import {
   AppBar,
   Box,
@@ -22,25 +24,50 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import profileImage from "../assets/profile.png";
-import navImg from "../assets/image_bg.png";
 import white from "../assets/white.png";
-const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
+
+const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const isOpen = Boolean(anchorEl);
-  const handleclick = (event) => {
+
+  // Fetch user details from Redux store or localStorage
+  const storedUser = useSelector((state) => state.global.user); // Redux user
+  const [user, setUserState] = useState(storedUser);
+
+  useEffect(() => {
+    if (!storedUser) {
+      const savedUser = JSON.parse(localStorage.getItem("user")); // Get from localStorage
+      if (savedUser) {
+        setUserState(savedUser);
+        dispatch(setUser(savedUser)); // Update Redux if necessary
+      }
+    }
+  }, [storedUser, dispatch]);
+
+  const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleclose = () => setAnchorEl(null);
+
+  const handleClose = () => setAnchorEl(null);
+
+  const handleLogout = () => {
+    dispatch(setUser(null)); // Clear Redux state
+    localStorage.removeItem("user"); // Remove user details
+    localStorage.removeItem("token"); // Remove authentication token
+    setAnchorEl(null);
+    navigate("/login"); // Redirect to login page
+  };
+
   return (
     <AppBar sx={{ position: "static", background: "none", boxShadow: "none" }}>
       <Toolbar sx={{ justifyContent: "space-between" }}>
         {/* LEFT SIDE */}
         <FlexBetween>
           <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-            <MenuIcon></MenuIcon>
+            <MenuIcon />
           </IconButton>
           <FlexBetween
             bgcolor={theme.palette.background.alt}
@@ -48,27 +75,28 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
             gap="3rem"
             p="0.1rem 1.5rem"
           >
-            <InputBase placeholder="search.."></InputBase>
+            <InputBase placeholder="Search..." />
             <IconButton>
-              <Search></Search>
+              <Search />
             </IconButton>
           </FlexBetween>
         </FlexBetween>
-        {/* Right side */}
-        <FlexBetween gap="1.5rem ">
+
+        {/* RIGHT SIDE */}
+        <FlexBetween gap="1.5rem">
           <IconButton onClick={() => dispatch(setMode())}>
             {theme.palette.mode === "dark" ? (
-              <LightModeOutlined sx={{ fontSize: "25px" }}></LightModeOutlined>
+              <LightModeOutlined sx={{ fontSize: "25px" }} />
             ) : (
-              <DarkModeOutlined sx={{ fontSize: "25px" }}></DarkModeOutlined>
+              <DarkModeOutlined sx={{ fontSize: "25px" }} />
             )}
           </IconButton>
           <IconButton>
-            <SettingsOutlined sx={{ fontSize: "25px" }}></SettingsOutlined>
+            <SettingsOutlined sx={{ fontSize: "25px" }} />
           </IconButton>
           <FlexBetween>
             <Button
-              onClick={handleclick}
+              onClick={handleMenuClick}
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -85,34 +113,33 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
                 src={white}
                 borderRadius="50%"
                 sx={{ objectFit: "cover" }}
-              ></Box>
+              />
               <Box textAlign="left">
                 <Typography
                   fontWeight="bold"
                   fontSize="0.85rem"
                   sx={{ color: theme.palette.secondary[100] }}
                 >
-                  {user.name}
+                  {user?.username || "Guest"}
                 </Typography>
                 <Typography
                   fontSize="0.75rem"
                   sx={{ color: theme.palette.secondary[200] }}
                 >
-                  {user.occupation}
+                  {user?.email || "No Email"}
                 </Typography>
               </Box>
               <ArrowDropDownOutlined
                 sx={{ color: theme.palette.secondary[300], fontSize: "25px" }}
-              ></ArrowDropDownOutlined>
+              />
             </Button>
             <Menu
               anchorEl={anchorEl}
               open={isOpen}
-              
-              onClose={handleclose}
+              onClose={handleClose}
               anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
             >
-                <MenuItem onClick={handleclick}>LogOut</MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </FlexBetween>
         </FlexBetween>

@@ -9,7 +9,7 @@ import clientRoutes from "./routes/client.js"
 import managementRoutes from "./routes/management.js"
 import generalRoutes from "./routes/general.js"
 import salesRoutes from "./routes/sales.js"
-// import authRoutes from "./routes/auth.js"
+import authRoutes from "./routes/auth.js"
 import User from "./models/User.js"
 import Daily from './models/Daily.js'
 import {dataUser,dataStudentStats, dataStudents,dataTransactions,dataOverallStatStudent,dataPerfomance,registeredUsers} from "./data/index.js"
@@ -36,7 +36,7 @@ app.use("/client",clientRoutes)
 app.use("/general",generalRoutes)
 app.use("/management",managementRoutes)
 app.use("/sales",salesRoutes)
-// app.use("/auth",authRoutes)
+app.use("/auth",authRoutes)
 
 // mongoose setup
 const PORT=process.env.PORT || 9000
