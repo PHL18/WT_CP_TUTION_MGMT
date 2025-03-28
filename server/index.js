@@ -38,6 +38,7 @@ app.use("/management",managementRoutes)
 app.use("/sales",salesRoutes)
 app.use("/auth",authRoutes)
 
+
 // mongoose setup
 const PORT=process.env.PORT || 9000
 mongoose.connect(process.env.MONGO_URL,{

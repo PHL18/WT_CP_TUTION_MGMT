@@ -27,7 +27,7 @@ export const getStudents=async(req,res)=>{
 }
 export const getTeachers=async(req,res)=>{
     try{
-       const teachers=await User.find({role:"user"}).select("-password")
+       const teachers=await User.find({role:"user"}).select("-password").limit(20)
        res.status(200).json(teachers)
     }catch(error)
     {
@@ -127,3 +127,36 @@ export const getPerformance=async(req,res)=>{
         res.status(500).json({message:error.message})
     }
 }
+
+export const addStudent = async (req, res) => {
+    try {
+      // Extract data from request body
+      const { name, age, class:className,subject,attendance,feesPaid,guardianName,createdAt,updatedAt } = req.body;
+  
+      // Validate required fields
+      if (!name || !age || !className || !subject || !guardianName || attendance === undefined || feesPaid === undefined) {
+        return res.status(400).json({ message: "All required fields must be provided." });
+      }
+  
+      // Create a new student instance
+      const newStudent = new Student({
+        name,
+        age,
+        class: className,
+        subject,
+        attendance,
+        feesPaid,
+        guardianName,
+        updatedAt,
+        createdAt
+      });
+  
+      // Save to database
+      const savedStudent = await newStudent.save();
+  
+      res.status(201).json({ message: "Student added successfully", student: savedStudent });
+    } catch (error) {
+      console.error("Error adding student:", error);
+      res.status(500).json({ message: "Internal server error", error });
+    }
+  };

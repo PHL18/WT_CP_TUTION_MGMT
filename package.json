@@ -9,6 +9,9 @@
     "country-iso-2-to-3": "^1.1.0",
     "dotenv": "^16.4.7",
     "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.13.1"
+    "jspdf": "^3.0.1",
+    "jspdf-autotable": "^5.0.2",
+    "mongodb": "^6.13.1",
+    "xlsx": "^0.18.5"
   }
 }

@@ -40,7 +40,7 @@ const Dashboard = () => {
   const isNonMediumScreens = useMediaQuery("(min-width:1200px)");
   const { data, isLoading } = useGetDashboardStatsQuery();
   const { data1, isLoading1 } = useGetAdminsQuery();
-  console.log(data1)
+  
  
   const data4=[
     {
@@ -317,6 +317,7 @@ const Dashboard = () => {
               fontWeight: "bold",
               padding: "10px 20px",
             }}
+            
           >
             <DownloadOutlined sx={{ mr: "10px" }} />
             Download Reports

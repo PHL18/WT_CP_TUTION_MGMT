@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Box, MenuItem, Select, Typography, useTheme } from '@mui/material';
+import { Box, Button, MenuItem, Select, Typography, useTheme } from '@mui/material';
 import { ResponsiveBar } from '@nivo/bar';
 import { ResponsivePie } from '@nivo/pie';
 import Header from 'components/Header';
 import { useGetPerformanceQuery } from 'state/api';
+import FlexBetween from 'components/FlexBetween';
+import * as XLSX from 'xlsx';
 
 const Index = () => {
     const { data, isLoading } = useGetPerformanceQuery();
@@ -15,6 +17,26 @@ const Index = () => {
 
     // Initialize selected student to the first student if not set
     const student = selectedStudent || data[0];
+
+    // Function to download all students' data as an Excel file
+    const downloadExcel = () => {
+        const formattedData = data.map(student => ({
+            ID: student.id,
+            Name: student.name,
+            Attendance: student.attendance_percentage + "%",
+            ...Object.fromEntries(
+                Object.entries(student.subjects).flatMap(([subject, scores]) => [
+                    [`${subject} MSE`, scores.MSE],
+                    [`${subject} ESE`, scores.ESE]
+                ])
+            )
+        }));
+
+        const worksheet = XLSX.utils.json_to_sheet(formattedData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Students Performance");
+        XLSX.writeFile(workbook, "Student_Performance.xlsx");
+    };
 
     // Transform selected student's subjects data for Nivo Bar Chart
     const chartData = Object.entries(student.subjects).map(([subject, scores]) => ({
@@ -31,7 +53,21 @@ const Index = () => {
 
     return (
         <Box m="1.5rem 2.5rem">
-            <Header title="Performance" subtitle="MSE & ESE Performance Insights with Attendance Data" />
+            <FlexBetween>
+                <Header title="Performance" subtitle="MSE & ESE Performance Insights with Attendance Data" />
+                <Button
+                    onClick={downloadExcel}
+                    sx={{
+                        bgcolor: theme.palette.secondary.light,
+                        color: theme.palette.background.alt,
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                        padding: "10px 20px",
+                    }}
+                >
+                    Download Sheet
+                </Button>
+            </FlexBetween>
 
             {/* Student Dropdown */}
             <Box mb={2}>
@@ -61,7 +97,7 @@ const Index = () => {
                         indexBy="subject" // X-axis labels
                         margin={{ top: 50, right: 50, bottom: 50, left: 60 }}
                         padding={0.3}
-                        colors={{ scheme: 'green_blue' }}
+                        colors={{ scheme: 'pastel1' }}
                         borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
                         axisBottom={{
                             tickSize: 5,
@@ -82,14 +118,14 @@ const Index = () => {
                         theme={{
                             textColor: theme.palette.mode === "dark" ? "#ffffff" : "#000000",
                             axis: {
-                              ticks: { text: { fill: theme.palette.text.primary } },
-                              legend: { text: { fill: theme.palette.text.primary } },
+                                ticks: { text: { fill: theme.palette.text.primary } },
+                                legend: { text: { fill: theme.palette.text.primary } },
                             },
                             tooltip: {
-                              container: {
-                                background: theme.palette.background.alt,
-                                color: theme.palette.text.primary,
-                              },
+                                container: {
+                                    background: theme.palette.background.alt,
+                                    color: theme.palette.text.primary,
+                                },
                             },
                             legends: { text: { fill: theme.palette.text.primary } },
                         }}
