@@ -130,33 +130,68 @@ export const getPerformance=async(req,res)=>{
 
 export const addStudent = async (req, res) => {
     try {
-      // Extract data from request body
-      const { name, age, class:className,subject,attendance,feesPaid,guardianName,createdAt,updatedAt } = req.body;
-  
-      // Validate required fields
-      if (!name || !age || !className || !subject || !guardianName || attendance === undefined || feesPaid === undefined) {
-        return res.status(400).json({ message: "All required fields must be provided." });
-      }
-  
-      // Create a new student instance
-      const newStudent = new Student({
-        name,
-        age,
-        class: className,
-        subject,
-        attendance,
-        feesPaid,
-        guardianName,
-        updatedAt,
-        createdAt
-      });
-  
-      // Save to database
-      const savedStudent = await newStudent.save();
-  
-      res.status(201).json({ message: "Student added successfully", student: savedStudent });
+        // Extract data from request body
+        const { _id,name, age, className, subject, attendance, feesPaid, guardianName, createdAt, updatedAt } = req.body;
+
+        // Validate each required field separately
+        if (!name) {
+            return res.status(400).json({ message: "Missing required field: name" });
+        }
+        if (!age) {
+            return res.status(400).json({ message: "Missing required field: age" });
+        }
+        if (!className) {
+            return res.status(400).json({ message: "Missing required field: className" });
+        }
+        if (!subject) {
+            return res.status(400).json({ message: "Missing required field: subject" });
+        }
+        if (!guardianName) {
+            return res.status(400).json({ message: "Missing required field: guardianName" });
+        }
+        if (attendance === undefined) {
+            return res.status(400).json({ message: "Missing required field: attendance" });
+        }
+        if (feesPaid === undefined) {
+            return res.status(400).json({ message: "Missing required field: feesPaid" });
+        }
+
+        // Log request body for debugging
+        console.log("Received request body:", req.body);
+
+        // Create a new student instance
+        const newStudent = new Student({
+            _id,
+            name,
+            age,
+            className,
+            subject,
+            attendance,
+            feesPaid,
+            guardianName,
+            updatedAt,
+            createdAt
+        });
+
+        // Save to database
+        const savedStudent = await newStudent.save();
+
+        res.status(201).json({ message: "Student added successfully", student: savedStudent });
     } catch (error) {
-      console.error("Error adding student:", error);
-      res.status(500).json({ message: "Internal server error", error });
+        console.error("Error adding student:", error);
+        res.status(500).json({ message: "Internal server error", error });
     }
-  };
+};
+
+export const deleteStudent = async (req, res) => {
+    const studentId = req.params.id;
+    try {
+        const result = await StudentModel.deleteOne({ _id: studentId });
+        if (result.deletedCount === 0) {
+            return res.status(404).json({ message: 'Student not found' });
+        }
+        res.json({ message: 'Student deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};

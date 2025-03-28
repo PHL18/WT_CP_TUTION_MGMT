@@ -15,7 +15,8 @@ export const api = createApi({
     "Performance",
     "Dashboard",
     "Auth",
-    "Add"
+    "Add",
+    "Delete"
   ],
   endpoints: (build) => ({
     getUser: build.query({
@@ -91,6 +92,13 @@ export const api = createApi({
       }),
       invalidatesTags:["Add"]
     }),
+    deleteStudent:build.mutation({
+        query:()=>({
+            url:"client/students",
+            method:"DELETE"
+        }),
+        invalidatesTags:["Delete"]
+    })
   }),
 });
 export const {
@@ -107,5 +115,6 @@ export const {
   useGetDashboardStatsQuery,
   useGetLoginMutation,
   useGetSignupMutation,
-  useAddStudentMutation
+  useAddStudentMutation,
+  useDeleteStudentMutation
 } = api;

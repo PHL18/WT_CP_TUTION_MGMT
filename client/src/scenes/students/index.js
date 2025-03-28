@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useGetStudentsQuery, useAddStudentMutation } from "state/api";
+import { useGetStudentsQuery, useAddStudentMutation,useDeleteStudentMutation } from "state/api";
 import {
   Box,
   Card,
@@ -16,9 +16,12 @@ import {
 } from "@mui/material";
 import Header from "components/Header";
 
-const Stud = ({ _id, name, age, feesPaid, attendance, marks, guardianName, stat }) => {
+const Stud = ({ _id, name, age,className, feesPaid, attendance, marks, guardianName}) => {
   const theme = useTheme();
   const [isExpanded, setIsExpanded] = useState(false);
+  const [studentDeleted]=useDeleteStudentMutation()
+  console.log(studentDeleted)
+
 
   return (
     <Card sx={{ backgroundImage: "none", backgroundColor: theme.palette.background.alt, borderRadius: "0.55rem" }}>
@@ -46,8 +49,8 @@ const Stud = ({ _id, name, age, feesPaid, attendance, marks, guardianName, stat 
         <CardContent>
           <Typography>ID: {_id}</Typography>
           <Typography>Guardian Name: {guardianName}</Typography>
-          <Typography>Monthly Data: {stat.monthlyData}</Typography>
-          <Typography>Daily Data: {stat.dailyData}</Typography>
+          <Typography>Class:{className}</Typography>
+        
         </CardContent>
       </Collapse>
     </Card>
@@ -65,13 +68,14 @@ const Students = () => {
     age: "", 
     className: "", 
     subject: "", 
-    attendance:0,
+    attendance:50,
     marks:0,
     feesPaid:0, 
     guardianName: "",
     createdAt: new Date().toISOString(), 
     updatedAt: new Date().toISOString() 
   });
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setStudentData({
@@ -150,8 +154,8 @@ const Students = () => {
       </Box>
       {data || !isLoading ? (
         <Box mt="20px" display="grid" gridTemplateColumns="repeat(4, minmax(0, 1fr))" justifyContent="space-between" rowGap="20px" columnGap="1.33%" sx={{ "& > div": { gridColumn: isNonMobile ? undefined : "span 4" } }}>
-          {data.map(({ _id, name, age, feesPaid, attendance, marks, guardianName, stat }) => (
-            <Stud key={_id} _id={_id} name={name} age={age} feesPaid={feesPaid} attendance={attendance} marks={marks} guardianName={guardianName} stat={stat} />
+          {data.map(({ _id, name, age, feesPaid, attendance, marks, guardianName, stat,className }) => (
+            <Stud key={_id} _id={_id} name={name} age={age} feesPaid={feesPaid} attendance={attendance} marks={marks} guardianName={guardianName} stat={stat}  className={className}/>
           ))}
         </Box>
       ) : (
@@ -160,21 +164,30 @@ const Students = () => {
 
       {/* Modal for Adding Student */}
       <Modal open={open} onClose={() => setOpen(false)}>
-        <Box p={4} bgcolor={theme.palette.background.alt} width={400} mx="auto" mt={10} borderRadius={2} boxShadow={3}>
-          <Typography variant="h6" mb={2}>Add New Student</Typography>
-          <form onSubmit={handleSubmit}>
-            <TextField fullWidth label="Name" name="name" value={studentData.name} onChange={handleInputChange} margin="dense" required />
-            <TextField fullWidth label="Age" name="age" type="number" value={studentData.age} onChange={handleInputChange} margin="dense" required />
-            <TextField fullWidth label="Class" name="className" value={studentData.className} onChange={handleInputChange} margin="dense" required />
-            <TextField fullWidth label="Subject" name="subject" value={studentData.subject} onChange={handleInputChange} margin="dense" required />
-            <TextField fullWidth label="Guardian Name" name="guardianName" value={studentData.guardianName} onChange={handleInputChange} margin="dense" required />
-            <Box mt={2} display="flex" justifyContent="space-between">
-              <Button variant="outlined" onClick={() => setOpen(false)}>Cancel</Button>
-              <Button type="submit" variant="contained" color="primary">Submit</Button>
-            </Box>
-          </form>
-        </Box>
-      </Modal>
+  <Box
+    p={4}
+    bgcolor={theme.palette.background.alt}
+    width={400}
+    mx="auto"
+    mt={10}
+    borderRadius={2}
+    boxShadow={3}
+  >
+    <Typography variant="h6" mb={2}>Add New Student</Typography>
+    <form onSubmit={handleSubmit}>
+      <TextField fullWidth label="Name" name="name" value={studentData.name} onChange={handleInputChange} margin="dense" required />
+      <TextField fullWidth label="Age" name="age" type="number" value={studentData.age} onChange={handleInputChange} margin="dense" required />
+      <TextField fullWidth label="Class" name="className" value={studentData.className} onChange={handleInputChange} margin="dense" required />
+      <TextField fullWidth label="Subject" name="subject" value={studentData.subject} onChange={handleInputChange} margin="dense" required />
+      <TextField fullWidth label="Guardian Name" name="guardianName" value={studentData.guardianName} onChange={handleInputChange} margin="dense" required />
+      <TextField fullWidth label="Fees Paid" name="feesPaid" type="number" value={studentData.feesPaid} onChange={handleInputChange} margin="dense" required />
+      <Box mt={2} display="flex" justifyContent="space-between">
+        <Button variant="outlined" onClick={() => setOpen(false)}>Cancel</Button>
+        <Button type="submit" variant="contained" color="primary">Submit</Button>
+      </Box>
+    </form>
+  </Box>
+</Modal>
     </Box>
   );
 };
