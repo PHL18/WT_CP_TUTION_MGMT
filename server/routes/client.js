@@ -10,6 +10,6 @@ router.get("/transactions",getTransactions);
 router.get("/geography",getGeography);
 router.get("/performance",getPerformance)
 router.post("/students",addStudent)
-router.post("/students",deleteStudent)
+router.delete("/students",deleteStudent)
 
 export default router

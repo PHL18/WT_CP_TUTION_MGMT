@@ -183,15 +183,20 @@ export const addStudent = async (req, res) => {
     }
 };
 
-export const deleteStudent = async (req, res) => {
-    const studentId = req.params.id;
+export const deleteStudent = async (id) => {
     try {
-        const result = await StudentModel.deleteOne({ _id: studentId });
-        if (result.deletedCount === 0) {
-            return res.status(404).json({ message: 'Student not found' });
+    
+        const response = await fetch(`http://localhost:5001/students/${id}`, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" }
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to delete student");
         }
-        res.json({ message: 'Student deleted successfully' });
+
+        console.log("Student deleted successfully");
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error("Error deleting student:", error);
     }
 };

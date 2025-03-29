@@ -15,12 +15,14 @@ import {
   TextField,
 } from "@mui/material";
 import Header from "components/Header";
+import FlexBetween from "components/FlexBetween";
 
-const Stud = ({ _id, name, age,className, feesPaid, attendance, marks, guardianName}) => {
+const Stud = ({ _id, name, age,className, feesPaid, attendance, marks, guardianName,handledelete}) => {
   const theme = useTheme();
+  
   const [isExpanded, setIsExpanded] = useState(false);
-  const [studentDeleted]=useDeleteStudentMutation()
-  console.log(studentDeleted)
+
+  
 
 
   return (
@@ -41,9 +43,12 @@ const Stud = ({ _id, name, age,className, feesPaid, attendance, marks, guardianN
         <Typography variant="body2">Fees Paid: {feesPaid}</Typography>
       </CardContent>
       <CardActions>
+        <FlexBetween>
         <Button variant="contained" size="small" onClick={() => setIsExpanded(!isExpanded)}>
           See more
         </Button>
+        {/* <Button onClick={()=>handledelete(_id)} variant="contained" size="small" sx={{ml:"10px",bgcolor:"#FF746C"}}>Delete</Button> */}
+        </FlexBetween>
       </CardActions>
       <Collapse in={isExpanded} timeout="auto" sx={{ color: theme.palette.neutral[300] }}>
         <CardContent>
@@ -63,6 +68,7 @@ const Students = () => {
   const isNonMobile = useMediaQuery("(min-width:1000px)");
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+  const [studentDeleted]=useDeleteStudentMutation()
   const [studentData, setStudentData] = useState({ 
     name: "", 
     age: "", 
@@ -82,6 +88,14 @@ const Students = () => {
       ...studentData,
       [name]: name === "age" || name === "attendance" || name === "marks" || name === "feesPaid" ? Number(value) : value,
     });
+  };
+  const handledelete = async (studentId) => {
+    try {
+      await studentDeleted(studentId);
+      refetch();
+    } catch (error) {
+      console.error("Error occurred while deleting student:", error);
+    }
   };
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent form default behavior
@@ -154,8 +168,8 @@ const Students = () => {
       </Box>
       {data || !isLoading ? (
         <Box mt="20px" display="grid" gridTemplateColumns="repeat(4, minmax(0, 1fr))" justifyContent="space-between" rowGap="20px" columnGap="1.33%" sx={{ "& > div": { gridColumn: isNonMobile ? undefined : "span 4" } }}>
-          {data.map(({ _id, name, age, feesPaid, attendance, marks, guardianName, stat,className }) => (
-            <Stud key={_id} _id={_id} name={name} age={age} feesPaid={feesPaid} attendance={attendance} marks={marks} guardianName={guardianName} stat={stat}  className={className}/>
+          {data.map(({ _id, name, age, feesPaid, attendance, marks, guardianName, stat,className}) => (
+            <Stud key={_id} _id={_id} name={name} age={age} feesPaid={feesPaid} attendance={attendance} marks={marks} guardianName={guardianName} stat={stat}  className={className} handledelete={handledelete}/>
           ))}
         </Box>
       ) : (
