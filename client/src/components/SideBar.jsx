@@ -71,7 +71,7 @@ const navItems = [
     icon: <TodayOutlined />,
   },
   {
-    text: "Monthly",
+    text: "Attendance",
     icon: <CalendarMonthOutlined />,
   },
   {
@@ -129,7 +129,7 @@ const SideBar = ({
               <FlexBetween color={theme.palette.secondary.main}>
                 <Box display="flex" alignItems="center" gap="0.5rem">
                   <Typography variant="h4" fontWeight="bold">
-                    TUT-APP
+                    OneClass
                   </Typography>
                 </Box>
                 <Box>

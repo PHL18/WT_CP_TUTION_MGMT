@@ -26,7 +26,7 @@ export const getStudents=async(req,res)=>{
     }
 }
 export const getTeachers=async(req,res)=>{
-    try{
+    try{ 
        const teachers=await User.find({role:"user"}).select("-password").limit(20)
        res.status(200).json(teachers)
     }catch(error)

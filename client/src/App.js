@@ -60,7 +60,7 @@ function App() {
               <Route path="/geography" element={<PrivateRoute element={<Geography />} />} />
               <Route path="/overview" element={<PrivateRoute element={<Overview />} />} />
               <Route path="/daily" element={<PrivateRoute element={<Daily />} />} />
-              <Route path="/monthly" element={<PrivateRoute element={<Monthly />} />} />
+              <Route path="/attendance" element={<PrivateRoute element={<Monthly />} />} />
               <Route path="/breakdown" element={<PrivateRoute element={<Breakdown />} />} />
               <Route path="/admin" element={<PrivateRoute element={<Admin />} />} />
               <Route path="/performance" element={<PrivateRoute element={<Performance />} />} />
