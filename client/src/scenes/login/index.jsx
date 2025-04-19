@@ -33,7 +33,7 @@ const Login = () => {
     setThemeMode(newTheme);
     localStorage.setItem("theme", newTheme);
   };
-
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   // Create theme based on mode
   const theme = useMemo(
     () =>
