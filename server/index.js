@@ -40,7 +40,7 @@ app.use("/auth",authRoutes)
 
 
 // mongoose setup
-const PORT=process.env.PORT || 9000
+const PORT=process.env.PORT || 5001
 mongoose.connect(process.env.MONGO_URL,{
     useNewUrlParser:true,
     useUnifiedTopology:true
