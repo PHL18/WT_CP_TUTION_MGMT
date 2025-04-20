@@ -38,6 +38,9 @@ app.use("/management",managementRoutes)
 app.use("/sales",salesRoutes)
 app.use("/auth",authRoutes)
 
+app.get('/', (req, res) => {
+    res.send('Welcome to the API Home Page!');
+  });
 
 // mongoose setup
 const PORT=process.env.PORT || 5001
