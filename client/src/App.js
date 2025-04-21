@@ -44,14 +44,14 @@ function App() {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Routes>
-            {/* Show Login First */}
+            
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
 
-            {/* Redirect to login if not authenticated */}
+         
             <Route path="/" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />} />
 
-            {/* Protected Routes */}
+            
             <Route element={<Layout />}>
               <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
               <Route path="/students" element={<PrivateRoute element={<Students />} />} />

@@ -15,7 +15,7 @@ const Signup = () => {
         setLoading(true);
 
         try {
-            const response = await fetch("http://localhost:5001/auth/signup", {
+            const response = await fetch("https://wt-cp-tution-mgmt-8.onrender.com/auth/signup", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, email, password }),
