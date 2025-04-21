@@ -128,7 +128,7 @@ const Students = () => {
     console.log(newStudentData)
   
     try {
-      const response = await fetch("http://localhost:5001/client/students", {
+      const response = await fetch("https://wt-cp-tution-mgmt-8.onrender.com/client/students", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newStudentData),
